@@ -23,10 +23,8 @@ if uploaded_image:
     image = Image.open(uploaded_image)
     st.session_state.image = image
 
-
 if st.session_state.image is not None:
     image = st.session_state.image
-
 
     image = np.array(image.convert('L'))
 
