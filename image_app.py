@@ -37,7 +37,12 @@ if st.session_state.image is not None:
     st.caption(f'Разрешение изображения: {image.shape[0]}x{image.shape[1]}')
     st.image(image, caption='Оригинал', use_column_width=True)
 
-    top_k = st.sidebar.slider('Выберите top K для сжатия', min_value=1, max_value=min(image.shape))
+    with st.sidebar.form(key='my_form'):
+        top_k = st.slider('Выберите top K для сжатия', min_value=1, max_value=min(image.shape))
+        submit = st.form_submit_button(label="Submit")
+
+    if submit:
+        st.caption(f'Вы выбрали top K: {top_k}')
 
     if top_k:
         U, sing_values, V = np.linalg.svd(image)
