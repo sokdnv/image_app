@@ -51,11 +51,10 @@ if st.session_state.image is not None:
         with st.spinner(text="Сжатие..."):
             if not color_choice:
                 compressed_image = svd_compression(image_gray, top_k)
-                compressed_image = (compressed_image - np.min(compressed_image)) / (np.max(compressed_image) - np.min(compressed_image))
-                st.image(compressed_image, caption='Сжатое изображение (ЧБ)', use_column_width=True)
             else:
                 channels = [image_array[:, :, i] for i in range(3)]
                 compressed_channels = [svd_compression(channel, top_k) for channel in channels]
                 compressed_image = np.stack(compressed_channels, axis=-1)
-                compressed_image = (compressed_image - np.min(compressed_image)) / (np.max(compressed_image) - np.min(compressed_image))
-                st.image(compressed_image, caption='Сжатое изображение (Цветное)', use_column_width=True)
+
+            compressed_image = (compressed_image - np.min(compressed_image)) / (np.max(compressed_image) - np.min(compressed_image))
+            st.image(compressed_image, caption='Сжатое изображение', use_column_width=True)
